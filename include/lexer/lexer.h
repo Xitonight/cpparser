@@ -15,20 +15,20 @@ enum class TokenType {
   End
 };
 
-class token {
+class Token {
   TokenType type_;
-  std::string value_;
+  std::string lexeme_;
   std::size_t position_;
 
 public:
-  token(TokenType type) : type_{type} {}
+  Token(TokenType type) : type_{type} {}
 };
 
 class tokenizer {
-  std::vector<token> tokens_;
+  std::vector<Token> tokens_;
 
 public:
-  std::vector<token> tokens() const { return tokens_; }
+  std::vector<Token> tokens() const { return tokens_; }
 };
 
 } // namespace lexer
