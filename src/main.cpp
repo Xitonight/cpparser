@@ -11,9 +11,7 @@ int main(int argc, char *argv[]) {
 
   std::string source = "a=1*2*3";
 
-  lexer::Tokenizer tokenizer(source);
-
-  std::cerr << tokenizer.advance() << std::endl;
+  lexer::Lexer lexer(source);
 
   return 0;
 }
