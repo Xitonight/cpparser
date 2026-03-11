@@ -1,6 +1,7 @@
-# CMake/Make directories
+# CMake/Make files
 build/
 .cache/
+compile_commands.json
 
 # Prerequisites
 *.d
