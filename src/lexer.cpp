@@ -72,7 +72,7 @@ Token Lexer::nextToken() {
   default:
     if (std::isdigit(c))
       return handleNumberToken();
-    else if (std::isalpha(c))
+    else if (std::isalpha(c) || c == '_')
       return handleIdentifierToken();
     throwLexingError(std::string("Unexpected char: ") + c);
   }
