@@ -72,6 +72,8 @@ Token Lexer::nextToken() {
   default:
     if (std::isdigit(c))
       return handleNumberToken();
+    else if (std::isalpha(c))
+      return handleIdentifierToken();
     throwLexingError(std::string("Unexpected char: ") + c);
   }
   return nextToken();
@@ -111,6 +113,17 @@ Token Lexer::handleStringToken() {
 
   return createToken(TokenType::STRING,
                      source_.substr(start_, current_ - start_));
+}
+
+Token Lexer::handleIdentifierToken() {
+  while (std::isalnum(peek()) || peek() == '_')
+    advance();
+  std::string text = source_.substr(start_, current_ - start_);
+  auto type = KeywordMap.find(text);
+  if (type != KeywordMap.end()) {
+    return createToken(type->second);
+  }
+  return createToken(TokenType::IDENTIFIER, text);
 }
 
 char Lexer::advance() {

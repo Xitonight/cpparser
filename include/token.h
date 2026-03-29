@@ -1,6 +1,7 @@
 #include <ostream>
 #include <string>
 #include <string_view>
+#include <unordered_map>
 
 namespace lexer {
 
@@ -33,6 +34,12 @@ enum class TokenType {
   // Literals
   NUMBER,
   STRING,
+  IDENTIFIER,
+
+  // Keywords
+  IF,
+  WHILE,
+  FOR,
 
   END_OF_FILE
 };
@@ -43,6 +50,8 @@ struct TokenTypeInfo {
 };
 
 extern TokenTypeInfo tokenTypeInfo[];
+
+extern const std::unordered_map<std::string, TokenType> KeywordMap;
 
 std::ostream &operator<<(std::ostream &out, TokenType const &type);
 

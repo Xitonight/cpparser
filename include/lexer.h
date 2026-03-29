@@ -20,6 +20,7 @@ private:
 
   [[nodiscard]] Token handleNumberToken();
   [[nodiscard]] Token handleStringToken();
+  [[nodiscard]] Token handleIdentifierToken();
 
   [[nodiscard]] Token createToken(TokenType type,
                                   std::string_view lexeme) const;
@@ -33,5 +34,4 @@ private:
   size_t start_ = 0;
   size_t current_ = 0;
 };
-
 } // namespace lexer

@@ -1,5 +1,6 @@
 #include <ostream>
 #include <token.h>
+#include <unordered_map>
 
 namespace lexer {
 
@@ -33,8 +34,20 @@ TokenTypeInfo tokenTypeInfo[] = {
     // Literals
     {"NUMBER", "number_literal"},
     {"STRING", "string_literal"},
+    {"IDENTIFIER", "identifier"},
+
+    // Keywords
+    {"IF", "if"},
+    {"WHILE", "while"},
+    {"FOR", "for"},
 
     {"END_OF_FILE", ""}};
+
+const std::unordered_map<std::string, TokenType> KeywordMap = {
+    {"if", TokenType::IF},
+    {"while", TokenType::WHILE},
+    {"for", TokenType::FOR},
+};
 
 std::ostream &operator<<(std::ostream &out, TokenType const &type) {
   return out << tokenTypeInfo[(int)type].name;
