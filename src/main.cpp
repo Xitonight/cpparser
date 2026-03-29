@@ -1,5 +1,5 @@
 #include <iostream>
-#include <lexer/lexer.h>
+#include <lexer.h>
 #include <ostream>
 #include <string>
 
@@ -11,7 +11,9 @@ int main(int argc, char *argv[]) {
 
   std::string source = "a=1*2*3";
 
-  lexer::Lexer lexer(source);
+  lexer::Lexer tokenizer(source);
+
+  std::cout << tokenizer.advance() << std::endl;
 
   return 0;
 }

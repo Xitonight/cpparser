@@ -15,28 +15,29 @@ enum class TokenType {
 };
 
 class Token {
+public:
+  Token(TokenType type) : type_{type} {}
+
+private:
   TokenType type_;
   std::string lexeme_;
   std::size_t position_;
-
-public:
-  Token(TokenType type) : type_{type} {}
 };
 
 class Lexer {
-  std::string source_;
-  std::size_t current_ = 0;
-  std::size_t line_ = 1;
+public:
+  Lexer(std::string source) : source_{source} {};
 
+  Token nextToken();
   bool isAtEnd() const;
   char peek() const;
   char advance();
   bool match(char expected);
 
-public:
-  Lexer(std::string source) : source_{source} {};
-
-  Token nextToken();
+private:
+  std::string source_;
+  std::size_t current_ = 0;
+  std::size_t line_ = 1;
 };
 
 } // namespace lexer
