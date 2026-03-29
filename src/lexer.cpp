@@ -13,6 +13,14 @@ Token Lexer::nextToken() {
     return createToken(TokenType::LEFT_PAREN);
   case ')':
     return createToken(TokenType::RIGHT_PAREN);
+  case '[':
+    return createToken(TokenType::LEFT_SQUARE_BRACKET);
+  case ']':
+    return createToken(TokenType::RIGHT_SQUARE_BRACKET);
+  case '{':
+    return createToken(TokenType::LEFT_CURLY_BRACKET);
+  case '}':
+    return createToken(TokenType::RIGHT_CURLY_BRACKET);
   case '=':
     if (match('='))
       return createToken(TokenType::EQUAL_EQUAL);
@@ -37,6 +45,8 @@ Token Lexer::nextToken() {
     if (match('-'))
       return createToken(TokenType::DECREMENT);
     return createToken(TokenType::MINUS);
+  case ';':
+    return createToken(TokenType::SEMICOLON);
   case '/':
     if (match('/')) {
       while (peek() != '\n' && !isAtEnd())

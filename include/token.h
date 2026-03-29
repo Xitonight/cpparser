@@ -1,7 +1,6 @@
 #include <ostream>
 #include <string>
 #include <string_view>
-#include <unordered_map>
 
 namespace lexer {
 
@@ -9,8 +8,13 @@ enum class TokenType {
   // Single char tokens
   LEFT_PAREN,
   RIGHT_PAREN,
+  LEFT_SQUARE_BRACKET,
+  RIGHT_SQUARE_BRACKET,
+  LEFT_CURLY_BRACKET,
+  RIGHT_CURLY_BRACKET,
   SLASH,
   STAR,
+  SEMICOLON,
 
   // One or two char tokens
   EQUAL,
