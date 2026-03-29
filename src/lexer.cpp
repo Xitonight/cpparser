@@ -99,15 +99,11 @@ Token Lexer::handleNumberToken() {
 }
 
 Token Lexer::handleStringToken() {
-  while (peek() != '"' && !isAtEnd()) {
-    if (peek() == '\n') {
-      line_++;
-      column_ = 1;
-    }
+  while (peek() != '"' && !isAtEnd() && peek() != '\n') {
     advance();
   }
 
-  if (isAtEnd()) {
+  if (isAtEnd() || peek() == '\n') {
     throwLexingError("Unterminated string.");
   }
 
