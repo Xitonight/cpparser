@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(parser VERSION 1.0 LANGUAGES CXX)
+project(CPParser VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -24,13 +24,13 @@ file(GLOB_RECURSE HEADERS
     "include/*.hh"
 )
 
-add_library(parser_lib ${SOURCES})
+add_library(cpparser_lib ${SOURCES})
 
-add_executable(parser
+add_executable(cpparser
     src/main.cpp
 )
 
-target_link_libraries(parser PRIVATE parser_lib)
+target_link_libraries(cpparser PRIVATE cpparser_lib)
 
 # Testing setup with Catch2
 include(FetchContent)
@@ -50,7 +50,7 @@ add_executable(tests
     ${TEST_SOURCES}
 )
 
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain parser_lib)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain cpparser_lib)
 
 include(CTest)
 include(Catch)
