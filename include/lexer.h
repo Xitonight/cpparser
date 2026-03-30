@@ -1,6 +1,7 @@
 #include <cstddef>
 #include <string>
 #include <token.h>
+#include <vector>
 
 namespace lexer {
 
@@ -9,7 +10,8 @@ public:
   Lexer() = default;
   Lexer(std::string_view source) : source_{source} {}
 
-  Token nextToken();
+  [[nodiscard]] Token nextToken();
+  [[nodiscard]] std::vector<Token> tokenize();
 
 private:
   [[nodiscard]] bool isAtEnd() const;
@@ -27,11 +29,13 @@ private:
   [[nodiscard]] Token createToken(TokenType type) const;
 
   void throwLexingError(std::string_view msg) const;
+  void throwLexingError(std::string_view msg, size_t column) const;
 
   std::string source_;
   size_t line_ = 1;
   size_t column_ = 1;
   size_t start_ = 0;
   size_t current_ = 0;
+  std::vector<Token> tokens_;
 };
 } // namespace lexer

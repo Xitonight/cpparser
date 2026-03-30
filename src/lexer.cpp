@@ -1,8 +1,20 @@
 #include <cli.h>
+#include <cstddef>
 #include <iostream>
 #include <lexer.h>
+#include <string>
+#include <vector>
 
 namespace lexer {
+
+std::vector<Token> Lexer::tokenize() {
+  Token t;
+  do {
+    t = nextToken();
+    tokens_.push_back(t);
+  } while (t.type() != lexer::TokenType::END_OF_FILE);
+  return tokens_;
+}
 
 Token Lexer::nextToken() {
   start_ = current_;
@@ -106,7 +118,8 @@ Token Lexer::handleStringToken() {
   }
 
   if (isAtEnd() || peek() == '\n') {
-    throwLexingError("Unterminated string.");
+    throwLexingError("Unterminated string.", start_);
+    // throwLexingError("Unterminated string.");
   }
 
   advance();
@@ -156,9 +169,51 @@ bool Lexer::match(char expected) {
 bool Lexer::isAtEnd() const { return current_ >= source_.length(); }
 
 void Lexer::throwLexingError(std::string_view msg) const {
+  // size_t lineStart = current_;
+  //
+  // while (lineStart > 0 && source_[lineStart - 1] != '\n')
+  //   lineStart--;
+  //
+  // size_t lineEnd = current_;
+  //
+  // while (lineEnd < source_.size() && source_[lineEnd] != '\n')
+  //   lineEnd++;
+  //
+  // std::string errorLine = source_.substr(lineStart, lineEnd - lineStart);
+  //
+  // std::cerr << std::endl
+  //           << Color::RED << "[line " << line_ << "] Error: " << msg
+  //           << Color::RESET << std::endl
+  //           << " " << line_ << " | " << errorLine << std::endl
+  //           << " " << std::string(std::to_string(line_).size(), ' ') << "  "
+  //           << std::string(column_ - 1, ' ') << Color::RED << "^"
+  //           << Color::RESET << std::endl;
+  //
+  // exit(1);
+  throwLexingError(msg, current_ - 1);
+}
+
+void Lexer::throwLexingError(std::string_view msg, size_t errorPos) const {
+  size_t lineStart = current_;
+
+  while (lineStart > 0 && source_[lineStart - 1] != '\n')
+    lineStart--;
+
+  size_t lineEnd = current_;
+
+  while (lineEnd < source_.size() && source_[lineEnd] != '\n')
+    lineEnd++;
+
+  std::string errorLine = source_.substr(lineStart, lineEnd - lineStart);
+
   std::cerr << std::endl
             << Color::RED << "[line " << line_ << "] Error: " << msg
+            << Color::RESET << std::endl
+            << " " << line_ << " | " << errorLine << std::endl
+            << " " << std::string(std::to_string(line_).size(), ' ') << "  "
+            << std::string(errorPos - lineStart + 1, ' ') << Color::RED << "^"
             << Color::RESET << std::endl;
+
   exit(1);
 }
 } // namespace lexer

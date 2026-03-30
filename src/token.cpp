@@ -1,3 +1,5 @@
+#include <iomanip>
+#include <ios>
 #include <ostream>
 #include <token.h>
 #include <unordered_map>
@@ -54,8 +56,9 @@ std::ostream &operator<<(std::ostream &out, TokenType const &type) {
 }
 
 std::ostream &operator<<(std::ostream &out, Token const &token) {
-  out << "Token(type: " << token.type() << ", lexeme: " << token.lexeme()
-      << ", line: " << token.line() << ", column: " << token.column() << ")";
+  out << "Token(type: " << std::left << std::setw(12) << token.type()
+      << ", lexeme: " << token.lexeme() << ", line: " << token.line()
+      << ", column: " << token.column() << ")";
   return out;
 }
 
